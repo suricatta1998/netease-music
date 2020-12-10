@@ -1,6 +1,8 @@
 <template>
   <svg
     class="logo-nav"
+    :width="width"
+    :height="height"
     version="1"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 900 300"
@@ -9,9 +11,22 @@
   </svg>
 </template>
 
+<script>
+export default {
+  props: {
+    width: {
+      type: Number,
+      default: 1400
+    },
+    height: {
+      type: Number,
+      default: 60
+    }
+  }
+}
+</script>
+
 <style lang="sass">
-  .logo-nav
-    fill: var(vs--theme-color)
-    height: 60px
-    width: 1400px
+.logo-nav
+  fill: var(vs--theme-color)
 </style>
