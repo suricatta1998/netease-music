@@ -1,7 +1,7 @@
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'netease-music',
+    title: '网易云音乐',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -14,7 +14,8 @@ export default {
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
-    'vuesax/dist/vuesax.css'
+    'vuesax/dist/vuesax.css',
+    '@/assets/main.sass'
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
@@ -35,6 +36,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/style-resources'
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
