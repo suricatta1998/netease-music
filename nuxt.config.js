@@ -21,7 +21,10 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    '@/plugins/vuesax'
+    '@/plugins/vuesax',
+    '@/plugins/axios',
+    '@/plugins/request',
+    '@/plugins/api'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -40,8 +43,19 @@ export default {
     '@nuxtjs/style-resources'
   ],
 
+  server: {
+    port: 8000
+  },
+
+  serverMiddleware: {
+    '/api': '~/server/app.js'
+  },
+
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    credentials: true,
+    prefix: '/api'
+  },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
