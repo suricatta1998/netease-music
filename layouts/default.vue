@@ -1,6 +1,7 @@
 <template>
   <div>
     <Siderbar />
+    <Login />
     <main class="main-page">
       <Nuxt />
     </main>
@@ -8,7 +9,16 @@
 </template>
 
 <script>
-export default {
+import { mapActions } from 'vuex'
 
+export default {
+  mounted () {
+    const user = JSON.parse(localStorage.getItem('user'))
+    this.setUser(user)
+  },
+
+  methods: {
+    ...mapActions('auth', ['setUser'])
+  }
 }
 </script>
