@@ -9,9 +9,17 @@
     background-color: #2c3e50
 
 .main-page
-  display: flex
   margin-left: 254px
+  margin-bottom: 100px
   padding-left: 0!important
   background-color: var(--vs-theme-bg)!important
   width: calc( 100% - 260px )
-  height: 80vh
+
+.truncate
+  overflow: hidden
+  white-space: nowrap
+  text-overflow: ellipsis
+
+// 修复card中text没有占满组件
+.vs-card__text
+  width: 100%

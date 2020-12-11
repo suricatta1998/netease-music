@@ -26,7 +26,8 @@ export default {
     '@/plugins/vuesax',
     '@/plugins/axios',
     '@/plugins/request',
-    '@/plugins/api'
+    '@/plugins/api',
+    '@/plugins/filters'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
