@@ -29,7 +29,7 @@ export default request => ({
   /**
    * 获取推荐歌单
    *
-   * @param {Number} params.limit
+   * @param {Number} params.limit 数量
    *
    */
   async getPersonalized (params) {
@@ -55,7 +55,7 @@ export default request => ({
   /**
    * 获取推荐新音乐
    *
-   * @param {Number} params.limit
+   * @param {Number} params.limit 数量
    */
   async getPersonalizedNewSong (params) {
     return await request.get('personalized/newsong', params)

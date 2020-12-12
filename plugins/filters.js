@@ -16,6 +16,21 @@ const filters = {
 
   formatNames (value) {
     return value.join(' / ')
+  },
+
+  formatDate (value) {
+    const date = new Date(value)
+    const year = date.getFullYear()
+    const month = date.getMonth().toString().padStart(2, 0)
+    const day = date.getDay().toString().padStart(2, 0)
+    return `${year}-${month}-${day}`
+  },
+
+  formatTime (value) {
+    const date = new Date(value)
+    const minutes = date.getMinutes().toString().padStart(2, 0)
+    const seconds = date.getSeconds().toString().padStart(2, 0)
+    return `${minutes}:${seconds}`
   }
 }
 

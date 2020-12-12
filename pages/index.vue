@@ -2,14 +2,15 @@
   <vs-row justify="center">
     <swiper :list="banners" auto-play />
 
+    <!-- 推荐歌单 -->
     <vs-row>
       <h2 class="title">
-        <nuxt-link to="#">
-          推荐歌单>
+        <nuxt-link to="/playlist">
+          推荐歌单
         </nuxt-link>
       </h2>
       <div class="personalize-content">
-        <vs-card v-for="item in personalizedPlayList" :key="item.id" type="2">
+        <vs-card v-for="item in personalizedPlayList" :key="item.id" type="2" @click="toPlaylistDetail(item.id)">
           <template #text>
             <p>{{ item.name }}</p>
           </template>
@@ -31,11 +32,12 @@
       </div>
     </vs-row>
 
+    <!-- 独家放送 -->
     <vs-row justify="center">
       <vs-col w="12">
         <h2 class="title">
           <nuxt-link to="#">
-            独家放送>
+            独家放送
           </nuxt-link>
         </h2>
       </vs-col>
@@ -60,11 +62,12 @@
       </vs-row>
     </vs-row>
 
+    <!-- 最新音乐 -->
     <vs-row>
       <vs-col w="12">
         <h2 class="title">
           <nuxt-link to="#">
-            最新音乐>
+            最新音乐
           </nuxt-link>
         </h2>
       </vs-col>
@@ -80,20 +83,21 @@
                 <img :src="item.picUrl" alt="">
               </vs-avatar>
             </vs-col>
-            <vs-col w="8">
+            <vs-col w="8" class="new-song-detail">
               <span>{{ item.name }}</span>
-              <span class="truncate">{{ item.song.artists.map(item => item.name) | formatNames }}</span>
+              <span class="truncate new-song-artists">{{ item.song.artists.map(item => item.name) | formatNames }}</span>
             </vs-col>
           </vs-row>
         </div>
       </vs-col>
     </vs-row>
 
+    <!-- 推荐MV -->
     <vs-row justify="center">
       <vs-col w="12">
         <h2 class="title">
           <nuxt-link to="#">
-            推荐MV>
+            推荐MV
           </nuxt-link>
         </h2>
       </vs-col>
@@ -146,6 +150,12 @@ export default {
       personalizedMV,
       personalizedNewSongs
     }
+  },
+
+  methods: {
+    toPlaylistDetail (playlistId) {
+      this.$router.push(`/playlist/${playlistId}`)
+    }
   }
 
 }
@@ -170,7 +180,12 @@ export default {
 
   .new-song
     padding: 4px
-    cursor: pointer
+
+  .new-song-artists
+    font-size: 0.1rem
+    color: #7B7D7D
+
+  .new-song-detail
     &:hover
       background-color: #eee
 
@@ -184,4 +199,6 @@ export default {
   > a
     text-decoration: none
     color: #000
+  &::after
+    content: '>'
 </style>
