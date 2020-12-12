@@ -43,22 +43,24 @@
           下载全部
         </vs-button>
       </vs-row>
-      <p>标签：{{ playlist.tags | formatNames }}</p>
-      <p>歌曲：{{ playlist.trackCount }}&nbsp;&nbsp;播放：{{ playlist.playCount | formatNumber }}</p>
-      <span>
-        简介：
-        <details v-if="playlist.description.indexOf('\n') !== -1">
-          <summary>
-            {{ description.summary }}
-          </summary>
-          <span class="desc-wrapper">
-            {{ description.detail }}
+      <div>
+        <p>标签：{{ playlist.tags | formatNames }}</p>
+        <p>歌曲：{{ playlist.trackCount }}&nbsp;&nbsp;播放：{{ playlist.playCount | formatNumber }}</p>
+        <span>
+          简介：
+          <details v-if="playlist.description.indexOf('\n') !== -1">
+            <summary>
+              {{ description.summary }}
+            </summary>
+            <span class="desc-wrapper">
+              {{ description.detail }}
+            </span>
+          </details>
+          <span v-else class="desc-wrapper">
+            {{ playlist.description }}
           </span>
-        </details>
-        <span v-else class="desc-wrapper">
-          {{ playlist.description }}
         </span>
-      </span>
+      </div>
     </vs-col>
 
     <vs-row justify="center">
@@ -76,19 +78,24 @@
       <vs-col type="flex" justify="center" class="nav-content">
         <song-list v-show="active === 'songs'" :songs="songs" />
 
-        <div v-show="active === 'comments'" class="comment">
-          <div>
+        <vs-row v-show="active === 'comments'" class="comments" justify="center">
+          <div v-if="hotComments.length !== 0">
             <h3>精彩评论</h3>
             <comment-list :comments="hotComments" />
           </div>
-          <div>
+          <vs-col w="12">
             <h3 ref="newCommentsTitle">
               最新评论 ({{ total }})
             </h3>
             <comment-list :comments="comments" />
-            <vs-pagination v-model="page" :length="Math.ceil(total / limit)" />
-          </div>
-        </div>
+            <vs-pagination v-if="total > limit" v-model="page" :length="Math.ceil(total / limit)" />
+          </vs-col>
+        </vs-row>
+
+        <vs-row v-show="active === 'subscribers'" justify="center">
+          <subscriber-list :subscribers="subscribers" style="margin-bottom: 15px" />
+          <vs-pagination v-if="subscriberTotal > limit" v-model="subscriberPage" :length="Math.ceil(subscriberTotal / limit)" />
+        </vs-row>
       </vs-col>
     </vs-row>
   </vs-row>
@@ -105,18 +112,25 @@ export default {
 
     const limit = 40
     const { comments, total, hotComments } = await $api.getPlaylistComment({ id, limit })
+    const subscriberData = await $api.getPlaylistSubscribers({ id, limit })
+    const subscriberTotal = subscriberData.total
+    const { subscribers } = subscriberData
+
     return {
       playlist,
       songs,
       comments,
       hotComments,
       total: total - hotComments.length,
+      subscribers,
+      subscriberTotal,
       limit
     }
   },
   data: () => ({
     active: 'comments',
-    page: 1
+    page: 1,
+    subscriberPage: 1
   }),
   computed: {
     creator () {
@@ -132,6 +146,9 @@ export default {
     },
     offset () {
       return (this.page - 1) * this.limit
+    },
+    subscriberOffset () {
+      return (this.subscriberPage - 1) * this.limit
     }
   },
   watch: {
@@ -147,6 +164,19 @@ export default {
       this.comments = comments
       loading.close()
       this.$refs.newCommentsTitle.scrollIntoView()
+    },
+    async subscriberPage () {
+      const loading = this.$vs.loading({
+        type: 'scale'
+      })
+      const { subscribers, total } = await this.$api.getPlaylistSubscribers({
+        id: this.playlist.id,
+        limit: this.limit,
+        offset: this.subscriberOffset
+      })
+      this.subscribers = subscribers
+      this.subscriberTotal = total
+      loading.close()
     }
   }
 }
@@ -172,6 +202,7 @@ export default {
   margin-top: 50px
   width: 90%
 
-.comment
-  width: 100%
+.comments
+ > div
+   width: 100%
 </style>
