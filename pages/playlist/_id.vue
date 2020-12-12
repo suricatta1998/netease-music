@@ -78,7 +78,7 @@
       <vs-col type="flex" justify="center" class="nav-content">
         <song-list v-show="active === 'songs'" :songs="songs" />
 
-        <vs-row v-show="active === 'comments'" class="comments" justify="center">
+        <vs-row v-show="active === 'comments'" justify="center">
           <div v-if="hotComments.length !== 0">
             <h3>精彩评论</h3>
             <comment-list :comments="hotComments" />
@@ -88,8 +88,8 @@
               最新评论 ({{ total }})
             </h3>
             <comment-list :comments="comments" />
-            <vs-pagination v-if="total > limit" v-model="page" :length="Math.ceil(total / limit)" />
           </vs-col>
+          <vs-pagination v-if="total > limit" v-model="page" :length="Math.ceil(total / limit)" />
         </vs-row>
 
         <vs-row v-show="active === 'subscribers'" justify="center">
@@ -202,7 +202,4 @@ export default {
   margin-top: 50px
   width: 90%
 
-.comments
- > div
-   width: 100%
 </style>
