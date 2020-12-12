@@ -128,7 +128,7 @@ export default {
     }
   },
   data: () => ({
-    active: 'comments',
+    active: 'songs',
     page: 1,
     subscriberPage: 1
   }),
