@@ -272,7 +272,11 @@ export default {
 
     next () {
       if (this.mode === 'shuffle') {
-        this.shuffleIndex++
+        if (this.shuffleIndex + 1 === this.shuffleList.length) {
+          this.shuffleIndex = 0
+        } else {
+          this.shuffleIndex++
+        }
         this.setCurrentIndex(this.shuffleList[this.shuffleIndex])
       }
       const idx = this.currentIndex + 1 === this.playlist.length ? 0 : this.currentIndex + 1
@@ -281,7 +285,11 @@ export default {
 
     prev () {
       if (this.mode === 'shuffle') {
-        this.shuffleIndex--
+        if (this.shuffleIndex - 1 < 0) {
+          this.shuffleIndex = this.shuffleList.length - 1
+        } else {
+          this.shuffleIndex--
+        }
         this.setCurrentIndex(this.shuffleList[this.shuffleIndex])
       }
       const idx = this.currentIndex - 1 < 0 ? this.playlist.length - 1 : this.currentIndex - 1
