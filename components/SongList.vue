@@ -21,10 +21,10 @@
     </template>
     <template #tbody>
       <vs-tr
-        v-for="(song, index) in $vs.getSearch(data, search)"
+        v-for="song in $vs.getSearch(data, search)"
         :key="song.id"
         class="item"
-        @dblclick.native="handle(index)"
+        @dblclick.native="handle(song.index)"
       >
         <vs-td>
           {{ song.name }}
@@ -56,7 +56,8 @@ export default {
     data: []
   }),
   created () {
-    this.data = this.songs.map(item => ({
+    this.data = this.songs.map((item, index) => ({
+      index,
       id: item.id,
       name: item.name,
       artists: item.ar.map(i => i.name),
