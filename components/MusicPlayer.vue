@@ -300,6 +300,7 @@ export default {
   background: hsla(192, 15%, 99%, .75)
   -webkit-backdrop-filter: blur(5px)
   backdrop-filter: blur(5px)
+  z-index: 9999
 
 @mixin text-overflow
   overflow: hidden
