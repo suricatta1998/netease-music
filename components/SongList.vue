@@ -5,33 +5,38 @@
     </template>
     <template #thead>
       <vs-tr>
-        <vs-th>
+        <vs-th sort @click="data = $vs.sortData($event, data, 'name')">
           音乐标题
         </vs-th>
-        <vs-th>
+        <vs-th sort @click="data = $vs.sortData($event, data, 'artists')">
           歌手
         </vs-th>
-        <vs-th>
+        <vs-th sort @click="data = $vs.sortData($event, data, 'album')">
           专辑
         </vs-th>
-        <vs-th>
+        <vs-th sort @click="data = $vs.sortData($event, data, 'time')">
           时长
         </vs-th>
       </vs-tr>
     </template>
     <template #tbody>
-      <vs-tr v-for="song in $vs.getSearch(songs, search)" :key="song.id">
+      <vs-tr
+        v-for="(song, index) in $vs.getSearch(data, search)"
+        :key="song.id"
+        class="item"
+        @dblclick.native="handle(index)"
+      >
         <vs-td>
           {{ song.name }}
         </vs-td>
         <vs-td>
-          {{ song.ar.map(i => i.name) | formatNames }}
+          {{ song.artists | formatNames }}
         </vs-td>
         <vs-td>
-          {{ song.al.name }}
+          {{ song.album }}
         </vs-td>
         <vs-td>
-          {{ song.dt | formatTime }}
+          {{ song.time | formatTime }}
         </vs-td>
       </vs-tr>
     </template>
@@ -47,11 +52,28 @@ export default {
     }
   },
   data: () => ({
-    search: ''
-  })
+    search: '',
+    data: []
+  }),
+  created () {
+    this.data = this.songs.map(item => ({
+      id: item.id,
+      name: item.name,
+      artists: item.ar.map(i => i.name),
+      album: item.al.name,
+      time: item.dt
+    }))
+  },
+  methods: {
+    handle (index) {
+      this.$emit('handle-list-item', index)
+    }
+  }
 }
 </script>
 
-<style>
-
+<style lang="sass" scoped>
+.item
+  &:hover
+    cursor: pointer
 </style>
