@@ -2,8 +2,8 @@
   <div class="subscriber-container">
     <vs-card v-for="item in subscribers" :key="item.id" type="1">
       <template #title>
-        <h3>
-          <nuxt-link to="#" class="nickname">
+        <h3 class="nickname">
+          <nuxt-link to="#">
             {{ item.nickname }}
           </nuxt-link>
         </h3>
@@ -39,8 +39,12 @@ export default {
   justify-content: center
 
 .nickname
-  text-decoration: none
-  color: #212F3C
-  &:hover
-    color: #95A5A6
+  overflow: hidden
+  white-space: nowrap
+  text-overflow: ellipsis
+  a
+    text-decoration: none
+    color: #212F3C
+    &:hover
+      color: #95A5A6
 </style>
