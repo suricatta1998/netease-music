@@ -18,7 +18,8 @@ export default {
   css: [
     'vuesax/dist/vuesax.css',
     'boxicons/css/boxicons.min.css',
-    '@/assets/css/main.sass'
+    '@/assets/css/main.sass',
+    '@/assets/css/iconfont.css'
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)

@@ -4,6 +4,7 @@
     <Login />
     <main class="main-page">
       <Nuxt />
+      <music-player />
     </main>
   </div>
 </template>

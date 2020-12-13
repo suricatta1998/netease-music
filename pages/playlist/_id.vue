@@ -5,7 +5,7 @@
         <img :src="playlist.coverImgUrl" alt="">
       </vs-avatar>
     </vs-col>
-    <vs-col w="8" class="detail">
+    <vs-col w="7" class="detail">
       <span class="name">{{ playlist.name }}</span>
       <vs-row align="center" class="creator">
         <vs-col w="1" type="flex" justify="center">
@@ -22,11 +22,11 @@
       </vs-row>
       <vs-row align="center">
         <vs-button-group>
-          <vs-button icon color="#8E44AD">
+          <vs-button icon color="#8E44AD" @click="changePlaylist">
             <i class="bx bx-play" />
             播放全部
           </vs-button>
-          <vs-button icon color="#8E44AD">
+          <vs-button icon color="#8E44AD" @click="addPlaylist">
             <i class="bx bx-plus" />
           </vs-button>
         </vs-button-group>
@@ -76,7 +76,7 @@
         </vs-navbar-item>
       </vs-navbar>
       <vs-col type="flex" justify="center" class="nav-content">
-        <song-list v-show="active === 'songs'" :songs="songs" />
+        <song-list v-show="active === 'songs'" :songs="songs" @handle-list-item="handleSongItem" />
 
         <vs-row v-show="active === 'comments'" justify="center">
           <div v-if="hotComments.length !== 0">
@@ -102,6 +102,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   async asyncData ({ $api, params }) {
     const id = params.id
@@ -130,7 +132,8 @@ export default {
   data: () => ({
     active: 'songs',
     page: 1,
-    subscriberPage: 1
+    subscriberPage: 1,
+    index: 0
   }),
   computed: {
     creator () {
@@ -177,6 +180,20 @@ export default {
       this.subscribers = subscribers
       this.subscriberTotal = total
       loading.close()
+    }
+  },
+  methods: {
+    ...mapActions('playlist', ['setPlaylist', 'setCurrentIndex', 'addSongs']),
+    handleSongItem (index) { // 获取当前索引
+      this.index = index
+      this.changePlaylist()
+    },
+    changePlaylist () { // 切换播放列表
+      this.setCurrentIndex(this.index)
+      this.setPlaylist(this.songs)
+    },
+    addPlaylist () { // 添加当前所有歌曲
+      this.addSongs(this.songs)
     }
   }
 }
