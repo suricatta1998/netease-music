@@ -79,10 +79,10 @@
         <song-list v-show="active === 'songs'" :songs="songs" @handle-list-item="handleSongItem" />
 
         <vs-row v-show="active === 'comments'" justify="center">
-          <div v-if="hotComments.length !== 0">
+          <vs-col v-if="hotComments.length !== 0" w="12">
             <h3>精彩评论</h3>
             <comment-list :comments="hotComments" />
-          </div>
+          </vs-col>
           <vs-col w="12">
             <h3 ref="newCommentsTitle">
               最新评论 ({{ total }})
@@ -108,9 +108,17 @@ export default {
   async asyncData ({ $api, params }) {
     const id = params.id
     const { playlist } = await $api.getPlaylistDetail({ id })
-    const { songs } = await $api.getSongDetail({
+    let { songs } = await $api.getSongDetail({
       ids: playlist.trackIds.map(track => track.id)
     })
+    // 给每首歌赋予source值
+    songs = songs.map(item => ({
+      ...item,
+      source: {
+        name: playlist.name,
+        id: playlist.id
+      }
+    }))
 
     const limit = 40
     const { comments, total, hotComments } = await $api.getPlaylistComment({ id, limit })

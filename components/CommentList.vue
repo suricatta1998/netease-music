@@ -1,13 +1,13 @@
 <template>
   <div>
     <template v-for="comment in comments">
-      <vs-row :key="comment.id" class="item" justify="center">
-        <vs-col w="1" type="flex" justify="center">
+      <vs-row :key="comment.id" class="item">
+        <vs-col w="2" type="flex" justify="center">
           <vs-avatar circle size="60">
             <img :src="comment.user.avatarUrl" alt="">
           </vs-avatar>
         </vs-col>
-        <vs-col w="11">
+        <vs-col w="10">
           <vs-col w="12">
             <nuxt-link to="#" class="nickname">
               {{ comment.user.nickname }}:

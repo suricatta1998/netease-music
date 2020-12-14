@@ -1,17 +1,17 @@
 <template>
-  <vs-row class="music-player" align="center">
-    <vs-col w="4">
-      <vs-row justify="space-around">
-        <vs-col w="3" type="flex" justify="flex-end">
-          <vs-avatar size="70">
+  <vs-row class="music-player" align="center" justify="space-between">
+    <vs-col w="3">
+      <vs-row justify="space-around" align="center">
+        <vs-col w="4" type="flex" justify="flex-end">
+          <vs-avatar size="70" style="cursor: pointer" @click="toPlaying">
             <img v-if="currentPlaying" :src="currentPlaying.al.picUrl" alt="">
             <i v-else class="bx bx-album" />
           </vs-avatar>
         </vs-col>
-        <vs-col w="8" type="flex" style="height: 70px">
+        <vs-col w="7" type="flex" style="height: 70px">
           <vs-row align="center" class="info">
             <vs-col w="12">
-              <span>{{ name }}</span>
+              <span @click="toPlaying">{{ name }}</span>
             </vs-col>
             <vs-col w="12">
               <small>{{ artists | formatNames }}</small>
@@ -21,7 +21,7 @@
       </vs-row>
     </vs-col>
 
-    <vs-col w="5">
+    <vs-col w="4">
       <audio
         ref="player"
         :src="url"
@@ -86,8 +86,8 @@
       </vs-row>
     </vs-col>
 
-    <vs-col w="3" type="flex" justify="center">
-      <vs-row align="center">
+    <vs-col w="4" type="flex" justify="center">
+      <vs-row align="center" justify="center">
         <div class="mode">
           <vs-tooltip v-if="mode === 'order'">
             <i
@@ -98,7 +98,7 @@
               列表循环
             </template>
           </vs-tooltip>
-          <vs-tooltip v-if="mode === 'loop'">
+          <vs-tooltip v-else-if="mode === 'loop'">
             <i
               class="iconfont icon-danquxunhuan"
               @click="mode = 'shuffle'"
@@ -107,7 +107,7 @@
               单曲循环
             </template>
           </vs-tooltip>
-          <vs-tooltip v-if="mode === 'shuffle'">
+          <vs-tooltip v-else>
             <i
               class="iconfont icon-suijibofang"
               @click="mode = 'order'"
@@ -125,14 +125,14 @@
               恢复音量
             </template>
           </vs-tooltip>
-          <vs-tooltip v-if="volume > '0' && volume < '1'">
-            <i class="bx bx-volume-low" @click="volume = '0'" />
+          <vs-tooltip v-else-if="volume === '1'">
+            <i class="bx bx-volume-full" @click="volume = '0'" />
             <template #tooltip>
               静音
             </template>
           </vs-tooltip>
-          <vs-tooltip v-if="volume === '1'">
-            <i class="bx bx-volume-full" @click="volume = '0'" />
+          <vs-tooltip v-else>
+            <i class="bx bx-volume-low" @click="volume = '0'" />
             <template #tooltip>
               静音
             </template>
@@ -145,6 +145,12 @@
           max="1"
           step="0.1"
         >
+        <vs-tooltip class="playlist" interactivity>
+          <i class="bx bxs-playlist" />
+          <template #tooltip>
+            播放列表
+          </template>
+        </vs-tooltip>
       </vs-row>
     </vs-col>
   </vs-row>
@@ -294,6 +300,10 @@ export default {
       }
       const idx = this.currentIndex - 1 < 0 ? this.playlist.length - 1 : this.currentIndex - 1
       this.setCurrentIndex(idx)
+    },
+
+    toPlaying () {
+      this.$router.push('/playing')
     }
   }
 }
@@ -322,6 +332,10 @@ export default {
     display: inline-block
     @include text-overflow
 
+    &:hover
+      cursor: pointer
+      color: #566573
+
   small
     width: 100%
     display: inline-block
@@ -347,6 +361,14 @@ export default {
 .volume
   i
     @include i-button
+
+.playlist
+  i
+    @include i-button
+
+.playlist-content
+  overflow: auto
+  overscroll-behavior: contain
 
 .progress
   display: flex

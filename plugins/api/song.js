@@ -31,5 +31,35 @@ export default request => ({
    */
   async checkSong (params) {
     return await request.get('check/music', params)
+  },
+
+  /**
+   * 获取歌词
+   *
+   * @param {String} id 音乐id
+   */
+  async getLyric (id) {
+    return await request.get('lyric', { id })
+  },
+
+  /**
+   * 获得歌单的所有评论
+   *
+   * @param {String} params.id 歌单id
+   * @param {Number} params.limit 取出评论数量, 默认为 20
+   * @param {Number} params.offset 偏移数量, 用于分页
+   * @param {String} params.before 分页参数,取上一页最后一项的 time 获取下一页数据(获取超过5000条评论的时候需要用到)
+   */
+  async getSongComment (params) {
+    return await request.get('comment/music', params)
+  },
+
+  /**
+   * 获取歌词
+   *
+   * @param {String} id 音乐id
+   */
+  async getSimiSongs (id) {
+    return await request.get('simi/song', { id })
   }
 })
