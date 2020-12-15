@@ -4,7 +4,7 @@
       <vs-row justify="space-around" align="center">
         <vs-col w="4" type="flex" justify="flex-end">
           <vs-avatar size="70" style="cursor: pointer" @click="toPlaying">
-            <img v-if="currentPlaying" :src="currentPlaying.al.picUrl" alt="">
+            <img v-if="currentPlaying" :src="currentPlaying.album.picUrl" alt="">
             <i v-else class="bx bx-album" />
           </vs-avatar>
         </vs-col>
@@ -179,7 +179,7 @@ export default {
     },
     artists () {
       if (this.currentPlaying) {
-        return this.currentPlaying.ar.map(i => i.name)
+        return this.currentPlaying.artists.map(i => i.name)
       }
       return []
     },

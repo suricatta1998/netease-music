@@ -13,7 +13,7 @@ export const mutations = {
   },
 
   ADD_SONGS (state, songs) {
-    state.playlist.splice(state.currentIndex, 0, ...songs)
+    state.playlist.splice(state.currentIndex + 1, 0, ...songs)
     // 去重
     state.playlist = _.uniq(state.playlist)
   },

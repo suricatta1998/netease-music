@@ -111,13 +111,21 @@ export default {
     let { songs } = await $api.getSongDetail({
       ids: playlist.trackIds.map(track => track.id)
     })
-    // 给每首歌赋予source值
+
     songs = songs.map(item => ({
-      ...item,
+      id: item.id,
+      name: item.name,
+      artists: item.ar.map(i => ({ id: i.id, name: i.name })),
+      album: {
+        id: item.al.id,
+        name: item.al.name,
+        picUrl: item.al.picUrl
+      },
       source: {
         name: playlist.name,
         id: playlist.id
-      }
+      },
+      dt: item.dt
     }))
 
     const limit = 40
