@@ -44,9 +44,14 @@
         </vs-button>
       </vs-row>
       <div>
-        <p>标签：{{ playlist.tags | formatNames }}</p>
-        <p>歌曲：{{ playlist.trackCount }}&nbsp;&nbsp;播放：{{ playlist.playCount | formatNumber }}</p>
-        <span>
+        <p v-if="playlist.tags.length !== 0">
+          标签：{{ playlist.tags | formatNames }}
+        </p>
+        <p>
+          歌曲：{{ playlist.trackCount }}&nbsp;&nbsp;
+          播放：{{ playlist.playCount | formatNumber }}
+        </p>
+        <span v-if="description">
           简介：
           <details v-if="playlist.description.indexOf('\n') !== -1">
             <summary>
@@ -83,17 +88,23 @@
             <h3>精彩评论</h3>
             <comment-list :comments="hotComments" />
           </vs-col>
-          <vs-col w="12">
+          <vs-col v-if="comments.length !== 0" w="12">
             <h3 ref="newCommentsTitle">
               最新评论 ({{ total }})
             </h3>
             <comment-list :comments="comments" />
           </vs-col>
+          <vs-col v-else w="12" type="flex" justify="center">
+            <h4>还没有评论噢</h4>
+          </vs-col>
           <vs-pagination v-if="total > limit" v-model="page" :length="Math.ceil(total / limit)" />
         </vs-row>
 
         <vs-row v-show="active === 'subscribers'" justify="center">
-          <subscriber-list :subscribers="subscribers" style="margin-bottom: 15px" />
+          <subscriber-list v-if="subscribers.length !== 0" :subscribers="subscribers" style="margin-bottom: 15px" />
+          <h4 v-else>
+            暂无收藏者
+          </h4>
           <vs-pagination v-if="subscriberTotal > limit" v-model="subscriberPage" :length="Math.ceil(subscriberTotal / limit)" />
         </vs-row>
       </vs-col>
@@ -156,12 +167,15 @@ export default {
       return this.playlist.creator
     },
     description () {
-      const summary = this.playlist.description.split('\n')[0]
-      const detail = this.playlist.description.split(summary)[1]
-      return {
-        summary,
-        detail
+      if (this.playlist.description) {
+        const summary = this.playlist.description.split('\n')[0]
+        const detail = this.playlist.description.split(summary)[1]
+        return {
+          summary,
+          detail
+        }
       }
+      return ''
     },
     offset () {
       return (this.page - 1) * this.limit
