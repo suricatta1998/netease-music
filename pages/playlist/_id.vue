@@ -216,6 +216,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+h3
+  padding-left: 3%
 .detail
   padding-left: 10px
 

@@ -206,6 +206,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+h3
+  padding-left: 3%
 a
   text-decoration: none
   &:hover
