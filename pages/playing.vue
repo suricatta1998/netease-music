@@ -3,7 +3,7 @@
     <vs-col w="5">
       <vs-row justify="center">
         <vs-col w="12" type="flex" j justify="center">
-          <Album :is-rotate="!isPaused" :album-url="currentPlaying.al.picUrl" />
+          <Album :is-rotate="!isPaused" :album-url="currentPlaying.album.picUrl" />
         </vs-col>
         <vs-row justify="space-around" style="width: 70%">
           <vs-tooltip>
@@ -47,7 +47,7 @@
         <vs-col w="3" class="truncate">
           <b>专辑:</b>
           <nuxt-link to="#">
-            {{ currentPlaying.al.name }}
+            {{ currentPlaying.album.name }}
           </nuxt-link>
         </vs-col>
         <vs-col w="3" class="truncate">
@@ -126,7 +126,7 @@ export default {
   computed: {
     ...mapGetters('playlist', ['currentPlaying', 'isPaused', 'currentTime', 'currentIndex']),
     artists () {
-      return this.currentPlaying.ar.map(i => i.name)
+      return this.currentPlaying.artists.map(i => i.name)
     },
     offset () {
       return (this.page - 1) * this.limit
@@ -184,9 +184,21 @@ export default {
     },
 
     addSimiSong (song) {
-      // TODO
-      // this.addSongs(song)
-      // this.setCurrentIndex(this.currentIndex + 1)
+      this.addSongs({
+        id: song.id,
+        name: song.name,
+        artists: song.artists.map(i => ({ id: i.id, name: i.name })),
+        album: {
+          id: song.album.id,
+          name: song.album.name,
+          picUrl: song.album.picUrl
+        },
+        source: {
+          name: song.album.name,
+          id: song.album.id
+        }
+      })
+      this.setCurrentIndex(this.currentIndex + 1)
     }
   }
 
