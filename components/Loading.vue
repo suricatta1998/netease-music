@@ -15,7 +15,9 @@ export default {
       })
     },
     finish () {
-      this.loading.close()
+      if (this.loading) {
+        this.loading.close()
+      }
     }
   }
 }
