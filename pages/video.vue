@@ -1,5 +1,5 @@
 <template>
-  <h1>Video</h1>
+  <h1>待开发。。。</h1>
 </template>
 
 <script>

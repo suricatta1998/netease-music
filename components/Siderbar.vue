@@ -98,7 +98,7 @@
         <vs-row justify="space-between">
           <template v-if="isAuth">
             <vs-avatar>
-              <nuxt-link to="profile">
+              <nuxt-link to="/profile">
                 <img :src="user.detail.profile.avatarUrl" alt="">
               </nuxt-link>
             </vs-avatar>
@@ -143,7 +143,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   data: () => ({
     active: 'discover',
-    keywords: '海阔天空', // TODO 用于测试，记得删掉
+    keywords: '',
     items: [
       {
         id: 'discover',
