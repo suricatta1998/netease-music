@@ -6,6 +6,7 @@
       <Nuxt />
       <music-player />
     </main>
+    <Playlist />
   </div>
 </template>
 
@@ -13,6 +14,7 @@
 import { mapActions } from 'vuex'
 
 export default {
+
   mounted () {
     const user = JSON.parse(localStorage.getItem('user'))
     this.setUser(user)

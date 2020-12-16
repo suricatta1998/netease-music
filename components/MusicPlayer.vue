@@ -146,7 +146,7 @@
           step="0.1"
         >
         <vs-tooltip class="playlist" interactivity>
-          <i class="bx bxs-playlist" />
+          <i class="bx bxs-playlist" @click="toggleShowPlaylist(true)" />
           <template #tooltip>
             播放列表
           </template>
@@ -169,7 +169,8 @@ export default {
     mode: 'order',
     shuffleList: [],
     shuffleIndex: 0,
-    volume: '0.5'
+    volume: '0.5',
+    playlistOpen: false
   }),
 
   computed: {
@@ -212,7 +213,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('playlist', ['setCurrentIndex', 'setCurrentTime', 'changePaused']),
+    ...mapActions('playlist', ['setCurrentIndex', 'setCurrentTime', 'changePaused', 'toggleShowPlaylist']),
     async getSongUrl () {
       const { success, message } = await this.$api.checkSong({
         id: this.currentPlaying.id

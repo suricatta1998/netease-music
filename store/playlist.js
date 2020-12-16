@@ -4,7 +4,8 @@ export const state = () => ({
   playlist: [],
   currentIndex: 0,
   currentTime: 0,
-  isPaused: true
+  isPaused: true,
+  showPlaylist: false
 })
 
 export const mutations = {
@@ -28,6 +29,10 @@ export const mutations = {
 
   CHANGE_PAUSED (state, status) {
     state.isPaused = status
+  },
+
+  TOGGLE_SHOW_PLAYLIST (state, status) {
+    state.showPlaylist = status
   }
 }
 
@@ -37,7 +42,7 @@ export const getters = {
   },
 
   currentPlaying (state) {
-    return state.playlist[state.currentIndex]
+    return state.currentIndex < state.playlist.length ? state.playlist[state.currentIndex] : state.playlist[state.playlist.length - 1]
   },
 
   currentTime (state) {
@@ -50,6 +55,10 @@ export const getters = {
 
   currentIndex (state) {
     return state.currentIndex
+  },
+
+  showPlaylist (state) {
+    return state.showPlaylist
   }
 }
 
@@ -73,5 +82,9 @@ export const actions = {
 
   changePaused ({ commit }, status) {
     commit('CHANGE_PAUSED', status)
+  },
+
+  toggleShowPlaylist ({ commit }, status) {
+    commit('TOGGLE_SHOW_PLAYLIST', status)
   }
 }

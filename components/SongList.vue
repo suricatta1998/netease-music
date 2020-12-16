@@ -1,27 +1,27 @@
 <template>
   <vs-table striped>
-    <template #header>
+    <template v-if="canSearch" #header>
       <vs-input v-model="search" border placeholder="搜索歌单音乐" />
     </template>
     <template #thead>
       <vs-tr>
-        <vs-th sort @click="data = $vs.sortData($event, data, 'name')">
+        <vs-th>
           音乐标题
         </vs-th>
-        <vs-th sort @click="data = $vs.sortData($event, data, 'artists')">
+        <vs-th>
           歌手
         </vs-th>
-        <vs-th sort @click="data = $vs.sortData($event, data, 'album')">
+        <vs-th>
           专辑
         </vs-th>
-        <vs-th sort @click="data = $vs.sortData($event, data, 'time')">
+        <vs-th>
           时长
         </vs-th>
       </vs-tr>
     </template>
     <template #tbody>
       <vs-tr
-        v-for="(song, index) in $vs.getSearch(data, search)"
+        v-for="(song, index) in $vs.getSearch(songs, search)"
         :key="song.id"
         class="item"
         @dblclick.native="handle(index)"
@@ -49,14 +49,16 @@ export default {
     songs: {
       type: Array,
       default: () => []
+    },
+    canSearch: {
+      type: Boolean,
+      default: true
     }
   },
-  data: () => ({
-    search: '',
-    data: []
-  }),
-  created () {
-    this.data = JSON.parse(JSON.stringify(this.songs))
+  data () {
+    return {
+      search: ''
+    }
   },
   methods: {
     handle (index) {

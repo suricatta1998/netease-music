@@ -72,6 +72,19 @@ export default request => ({
    */
   async getHotComment (params) {
     return await request.get('comment/hot', params)
+  },
+
+  /**
+   * 搜索传入搜索关键词可以搜索该音乐 / 专辑 / 歌手 / 歌单 / 用户 , 关键词可以多个 , 以空格隔开
+   *
+   * @param {String} params.keywords 关键词
+   * @param {Number} params.limit 返回数量
+   * @param {Number} params.offset 偏移量
+   * @param {Number} params.type 搜索类型
+   *        取值意义 : 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频, 1018:综合
+   */
+  async search (params) {
+    return await request.get('cloudsearch', params)
   }
 
 })

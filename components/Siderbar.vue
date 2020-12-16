@@ -8,7 +8,7 @@
       </template>
 
       <!-- 搜索 -->
-      <vs-sidebar-item>
+      <vs-sidebar-item id="search">
         <template #icon>
           <i class="bx bx-search" />
         </template>
@@ -143,7 +143,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   data: () => ({
     active: 'discover',
-    keywords: '',
+    keywords: '海阔天空', // TODO 用于测试，记得删掉
     items: [
       {
         id: 'discover',
@@ -220,8 +220,17 @@ export default {
 
   methods: {
     ...mapActions('auth', ['toggleLoginDialog', 'setUser']),
-    async search () { // 搜索歌曲
-      // TODO
+    search () { // 搜索歌曲
+      // eslint-disable-next-line no-console
+      console.log(this.keywords)
+      if (this.keywords) {
+        this.$router.push({
+          path: '/search',
+          query: {
+            keywords: this.keywords
+          }
+        })
+      }
     },
     logout () {
       localStorage.removeItem('user')
