@@ -84,7 +84,7 @@
               </vs-avatar>
             </vs-col>
             <vs-col w="8" class="new-song-detail">
-              <span>{{ item.name }}</span>
+              <span class="truncate">{{ item.name }}</span>
               <span class="truncate new-song-artists">{{ item.song.artists.map(item => item.name) | formatNames }}</span>
             </vs-col>
           </vs-row>
