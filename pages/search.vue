@@ -182,7 +182,7 @@ export default {
   data: () => ({
     keywords: '',
     title: '',
-    active: 'radios',
+    active: 'songs',
     limit: 100,
     page: 1,
     songsData: {
