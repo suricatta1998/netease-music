@@ -18,8 +18,6 @@
     "lodash": "^4.17.20",
     "node-sass": "^5.0.0",
     "nuxt": "^2.14.6",
-    "pug": "^3.0.0",
-    "pug-plain-loader": "^1.1.0",
     "sass-loader": "^10.1.0",
     "vuesax": "^4.0.1-alpha.25"
   },
