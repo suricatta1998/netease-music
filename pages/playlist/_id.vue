@@ -80,10 +80,11 @@
           收藏者
         </vs-navbar-item>
       </vs-navbar>
-      <vs-col type="flex" justify="center" class="nav-content">
-        <song-list v-show="active === 'songs'" :songs="songs" @handle-list-item="handleSongItem" />
 
-        <vs-row v-show="active === 'comments'" justify="center">
+      <vs-col w="11" class="nav-content">
+        <song-list v-if="active === 'songs'" :songs="songs" @handle-list-item="handleSongItem" />
+
+        <vs-row v-if="active === 'comments'" justify="center">
           <vs-col v-if="hotComments.length !== 0" w="12">
             <h3>精彩评论</h3>
             <comment-list :comments="hotComments" />
@@ -100,7 +101,7 @@
           <vs-pagination v-if="total > limit" v-model="page" :length="Math.ceil(total / limit)" />
         </vs-row>
 
-        <vs-row v-show="active === 'subscribers'" justify="center">
+        <vs-row v-if="active === 'subscribers'" justify="center">
           <subscriber-list v-if="subscribers.length !== 0" :subscribers="subscribers" style="margin-bottom: 15px" />
           <h4 v-else>
             暂无收藏者
@@ -249,6 +250,5 @@ h3
 
 .nav-content
   margin-top: 50px
-  width: 90%
 
 </style>
