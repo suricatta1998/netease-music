@@ -304,7 +304,9 @@ export default {
     },
 
     toPlaying () {
-      this.$router.push('/playing')
+      if (this.currentPlaying) {
+        this.$router.push('/playing')
+      }
     }
   }
 }
